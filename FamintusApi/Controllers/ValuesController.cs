@@ -18,12 +18,6 @@ namespace FamintusApi.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            String value = null;
-            if (value.IsNormalized())
-            {
-                Console.WriteLine("Boo...");
-            }
-
             return "value";
         }
 
