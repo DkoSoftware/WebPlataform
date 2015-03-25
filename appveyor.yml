@@ -7,5 +7,5 @@ environment:
 on_success:
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
-  - git remote add appharbor https://github.com/Famintus/WebPlataform.git
+  - git remote add appharbor https://qa@appharbor.com/famintus.git
   - git push appharbor master
