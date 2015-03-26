@@ -1,0 +1,20 @@
+version: 0.1.{build}
+branches:
+  only:
+  - master
+environment:
+  username:
+    secure: v+nh1V8vxRG7ksm+Z00UFg==
+  password:
+    secure: KGlcZrCbXtRX46QVAskRFi2BaEVb4BeDFSDcke1Aa1c=
+before_build:
+- nuget restore FamintusApi.sln
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+on_success:
+  - git config --global credential.helper store
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
+  - git remote add appharbor https://qa@appharbor.com/famintus.git
+  - git push appharbor master
