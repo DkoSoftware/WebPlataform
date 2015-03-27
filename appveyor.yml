@@ -1,4 +1,5 @@
 version: 0.1.{build}
+skip_tags: true
 branches:
   only:
   - master
@@ -12,6 +13,7 @@ environment:
 before_build:
 - nuget restore FamintusApi.sln
 build:
+  project: FamintusApi.sln
   publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
