@@ -3,6 +3,8 @@ branches:
   only:
   - master
 environment:
+  COVERALLS_REPO_TOKEN:
+    secure: GL0JeCQDYWrVFnmMgbefqqjGuAVpSB1KRElHVuEAjLRDTocArJRkFPVIPXc/054+
   username:
     secure: v+nh1V8vxRG7ksm+Z00UFg==
   password:
@@ -13,6 +15,10 @@ build:
   publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
+test_script:
+- ps: >-
+    .\packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -target:MSTest.exe -register:user "-targetargs:""FamintusApi.Tests\bin\$env:CONFIGURATION\FamintusApi.Tests.dll"" /noshadow" -filter:"+[FamintusApi*]*" -output:opencoverCoverage.xml
+    .\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
 on_success:
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
