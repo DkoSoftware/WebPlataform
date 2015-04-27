@@ -8,9 +8,9 @@ environment:
   COVERALLS_REPO_TOKEN:
     secure: GL0JeCQDYWrVFnmMgbefqqjGuAVpSB1KRElHVuEAjLRDTocArJRkFPVIPXc/054+
   username:
-    secure: tcQSn721ejWM/6OctqLR2hP9PPIh8G3ea2TMmmO0WZ4=
+    secure: v+nh1V8vxRG7ksm+Z00UFg==
   password:
-    secure: 7/prAj9717yiQcSUC2L6FA==
+    secure: BRdEAFdCXuJQu8oIXBFfeQ==
 before_build:
 - nuget restore FamintusApi.sln
 build:
