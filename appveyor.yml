@@ -10,7 +10,7 @@ environment:
   username:
     secure: v+nh1V8vxRG7ksm+Z00UFg==
   password:
-    secure: KGlcZrCbXtRX46QVAskRFi2BaEVb4BeDFSDcke1Aa1c=
+    secure: 7/prAj9717yiQcSUC2L6FA==
 before_build:
 - nuget restore FamintusApi.sln
 build:
