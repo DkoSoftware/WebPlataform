@@ -26,3 +26,8 @@ on_success:
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
   - git remote add appharbor https://qa@appharbor.com/famintus.git
   - git push appharbor master
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/b67d1551fad31db6dd8e
+    on_build_success: true
+    on_build_failure: true
