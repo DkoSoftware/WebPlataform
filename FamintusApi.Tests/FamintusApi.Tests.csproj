@@ -129,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\LojaRepositorioTest.cs" />
+    <Compile Include="Repositorios\ProdutoRepositorioTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
