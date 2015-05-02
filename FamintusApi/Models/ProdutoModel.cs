@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace FamintusApi.Models
 {
-    public class ProdutoModel
+    public class ProdutoModel : IModel
     {
         public Int32 Id { get; set; }
 
@@ -14,5 +11,7 @@ namespace FamintusApi.Models
         public String Imagem { get; set; }
 
         public String Descricao { get; set; }
+
+        public Int32 IdLoja { get; set; }
     }
 }

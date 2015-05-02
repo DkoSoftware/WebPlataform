@@ -1,4 +1,6 @@
 ﻿using FamintusApi.Models;
+using FamintusApi.Repositorios.Produto;
+using FamintusApi.Servicos.Produto;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -9,25 +11,30 @@ namespace FamintusApi.Controllers
     [RoutePrefix("api/produto")]
     public class ProdutoController : ApiController
     {
+        private readonly IProdutoRepositorio produtoRepo;
+        private readonly IProdutoServico produtoServ;
+
+        public ProdutoController(IProdutoRepositorio produtoRepo, IProdutoServico produtoServ)
+        {
+            if (produtoRepo == null)
+                throw new ArgumentNullException("produtoRepo");
+            if (produtoServ == null)
+                throw new ArgumentNullException("produtoServ");
+
+            this.produtoRepo = produtoRepo;
+            this.produtoServ = produtoServ;
+        }
+
         [Route("{id:int:min(1)}")]
         public ProdutoModel Get(Int32 id)
         {
-            //Obs.: Pegar outras imagens de: http://www.petiskeira.com.br/assets/images/content/cardapio/
-
-            return new ProdutoModel 
-            {
-                Id = 1,
-                Nome = "Frango Supreme",
-                Descricao = "Massa penne ao molho cremoso e levemente apimentado à base de nata, cogumelos frescos, pimentões e especiarias. Acompanha nosso delicioso frango crocante.",
-                Imagem = "http://www.petiskeira.com.br/assets/images/content/cardapio/5753.png"
-            };
+            return produtoRepo.ObterPeloId(id);
         }
 
         [Route("")]
         public HttpResponseMessage Post(ProdutoModel produto)
         {
-            //TODO: Validar e cadastrar produto.
-            produto.Id = (new Random()).Next(1, 100000);
+            produtoServ.Adicionar(produto);
 
             var result = new 
             {
@@ -43,7 +50,7 @@ namespace FamintusApi.Controllers
         [Route("")]
         public HttpResponseMessage Put(ProdutoModel produto)
         {
-            //TODO: Validar e atualizar produto.
+            produtoServ.Atualizar(produto);
 
             var result = new
             {
@@ -58,7 +65,9 @@ namespace FamintusApi.Controllers
         [Route("{id:int:min(1)}")]
         public HttpResponseMessage Delete(Int32 id)
         {
-            //TODO: Validar e deletar produto.
+            var produto = new ProdutoModel { Id = id };
+
+            produtoServ.Remover(produto);
 
             var result = new
             {

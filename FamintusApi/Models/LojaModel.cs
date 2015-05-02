@@ -2,7 +2,7 @@
 
 namespace FamintusApi.Models
 {
-    public class LojaModel
+    public class LojaModel : IModel
     {
         public Int32 Id { get; set; }
         

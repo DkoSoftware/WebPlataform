@@ -2,7 +2,7 @@
 
 namespace FamintusApi.Models
 {
-    public class ComandaModel
+    public class ComandaModel : IModel
     {
         public Int32 Id { get; set; }
 
