@@ -24,6 +24,9 @@ namespace FamintusApi
 
             GlobalConfiguration.Configuration.Filters.Add(new ElmahErrorAttribute());
 
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             SimpleInjectorConfig.Initialize(GlobalConfiguration.Configuration);
         }
     }
