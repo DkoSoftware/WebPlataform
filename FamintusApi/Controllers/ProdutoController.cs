@@ -1,6 +1,7 @@
 ﻿using FamintusApi.Models;
 using FamintusApi.Repositorios.Produto;
 using FamintusApi.Servicos.Produto;
+using FamintusApi.ViewModels;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -36,30 +37,30 @@ namespace FamintusApi.Controllers
         {
             produtoServ.Adicionar(produto);
 
-            var result = new 
+            var result = new ApiModelResponse
             {
-                id = produto.Id,
-                message = "Criado com sucesso",
-                erro = false
+                Id = produto.Id,
+                Mensagem = "Criado com sucesso"
             };
 
             var response = Request.CreateResponse(HttpStatusCode.Created, result);
             return response;
         }
 
-        [Route("")]
-        public HttpResponseMessage Put(ProdutoModel produto)
+        [Route("{id:int:min(1)}")]
+        public HttpResponseMessage Put(Int32 id, ProdutoModel produto)
         {
+            produto.Id = id;
             produtoServ.Atualizar(produto);
 
-            var result = new
+            var result = new ApiModelResponse
             {
-                id = produto.Id,
-                message = "Atualizado com sucesso",
-                erro = false
+                Id = produto.Id,
+                Mensagem = "Atualizado com sucesso",
+                Erro = false
             };
 
-            return Request.CreateResponse(HttpStatusCode.Created, result);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [Route("{id:int:min(1)}")]
@@ -69,10 +70,10 @@ namespace FamintusApi.Controllers
 
             produtoServ.Remover(produto);
 
-            var result = new
+            var result = new ApiModelResponse
             {
-                message = "Removido com sucesso",
-                erro = false
+                Mensagem = "Removido com sucesso",
+                Erro = false
             };
 
             return Request.CreateResponse(HttpStatusCode.OK, result);

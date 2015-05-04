@@ -198,6 +198,7 @@
     <Compile Include="Repositorios\Produto\ProdutoRepositorio.cs" />
     <Compile Include="Servicos\Produto\IProdutoServico.cs" />
     <Compile Include="Servicos\Produto\ProdutoServico.cs" />
+    <Compile Include="ViewModels\ApiModelResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
