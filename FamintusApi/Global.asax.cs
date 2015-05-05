@@ -1,4 +1,6 @@
-﻿using FamintusApi.Filters;
+﻿using FamintusApi.App_Start;
+using FamintusApi.Filters;
+using Newtonsoft.Json.Serialization;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -15,12 +17,17 @@ namespace FamintusApi
         {
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.Filters.Add(new ElmahErrorAttribute());
+
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            SimpleInjectorConfig.Initialize(GlobalConfiguration.Configuration);
         }
     }
 }
