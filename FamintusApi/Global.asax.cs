@@ -1,4 +1,4 @@
-﻿using FamintusApi.App_Start;
+﻿using FamintusApi.Crosscutting.Ioc;
 using FamintusApi.Filters;
 using Newtonsoft.Json.Serialization;
 using System.Web.Http;
@@ -27,7 +27,7 @@ namespace FamintusApi
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            SimpleInjectorConfig.Initialize(GlobalConfiguration.Configuration);
+            DependencyResolver.SetResolver(SimpleInjectorConfig.Initialize(GlobalConfiguration.Configuration));
         }
     }
 }

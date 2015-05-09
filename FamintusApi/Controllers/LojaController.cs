@@ -1,6 +1,6 @@
-﻿using FamintusApi.Models;
-using FamintusApi.Repositorios.Loja;
-using FamintusApi.Repositorios.Produto;
+﻿using FamintusApi.Dominio.Entidades;
+using FamintusApi.Dominio.Repositorios;
+using FamintusApi.Models;
 using System;
 using System.Web.Http;
 

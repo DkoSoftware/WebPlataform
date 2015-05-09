@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using FamintusApi.Dominio.Base;
+using FamintusApi.Dominio.Entidades;
 
 namespace FamintusApi.Models
 {

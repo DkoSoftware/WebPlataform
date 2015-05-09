@@ -1,4 +1,6 @@
-﻿using FamintusApi.Models;
+﻿using FamintusApi.Dominio.Base;
+using FamintusApi.Dominio.Entidades;
+using FamintusApi.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
