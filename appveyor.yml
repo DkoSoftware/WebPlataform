@@ -37,7 +37,7 @@ notifications:
     on_build_status_changed: false
 
 test_script:
-  - .\packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:opencoverCoverage.xml
+  - OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:coverage.xml
   - coveralls.net --opencover coverage.xml
 
 on_success:
