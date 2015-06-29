@@ -167,6 +167,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SimpleInjectorConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ComandaController.cs" />
@@ -179,9 +180,24 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ComandaModel.cs" />
     <Compile Include="Models\IFamintusDataContext.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\LojaModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\ProdutoModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\FamintusMemoryContext.cs" />
+    <Compile Include="Repositorios\Loja\ILojaRepositorio.cs" />
+    <Compile Include="Repositorios\Loja\LojaRepositorio.cs" />
+    <Compile Include="Repositorios\PopuladorDados.cs" />
+    <Compile Include="Repositorios\Produto\IProdutoRepositorio.cs" />
+    <Compile Include="Repositorios\Produto\ProdutoRepositorio.cs" />
+    <Compile Include="Servicos\Produto\IProdutoServico.cs" />
+    <Compile Include="Servicos\Produto\ProdutoServico.cs" />
     <Compile Include="ViewModels\ApiModelResponse.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -288,28 +304,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\" />
-    <Folder Include="Repositorios\Loja\" />
-    <Folder Include="Repositorios\Produto\" />
-    <Folder Include="Servicos\Produto\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FamintusApi.Crosscutting\FamintusApi.Crosscutting.csproj">
-      <Project>{3f36e567-e013-4073-b2a2-46632132b1e4}</Project>
-      <Name>FamintusApi.Crosscutting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FamintusApi.Dominio\FamintusApi.Dominio.csproj">
-      <Project>{6609b6fd-1f1e-40d8-bc32-d1f5a8387082}</Project>
-      <Name>FamintusApi.Dominio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FamintusApi.Infraestrutura\FamintusApi.Infraestrutura.csproj">
-      <Project>{DE2FB79F-1F3F-485E-A87E-05B1DA2C42FA}</Project>
-      <Name>FamintusApi.Infraestrutura</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

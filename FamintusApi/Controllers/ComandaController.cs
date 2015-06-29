@@ -1,5 +1,4 @@
-﻿using FamintusApi.Dominio.Entidades;
-using FamintusApi.Models;
+﻿using FamintusApi.Models;
 using System;
 using System.Net;
 using System.Net.Http;

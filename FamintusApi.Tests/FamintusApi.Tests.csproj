@@ -139,18 +139,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FamintusApi.Dominio\FamintusApi.Dominio.csproj">
-      <Project>{6609b6fd-1f1e-40d8-bc32-d1f5a8387082}</Project>
-      <Name>FamintusApi.Dominio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FamintusApi.Infraestrutura\FamintusApi.Infraestrutura.csproj">
-      <Project>{de2fb79f-1f3f-485e-a87e-05b1da2c42fa}</Project>
-      <Name>FamintusApi.Infraestrutura</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FamintusApi.Servicos\FamintusApi.Servicos.csproj">
-      <Project>{69b706bb-33d7-49bb-bf05-5cd2a717eca1}</Project>
-      <Name>FamintusApi.Servicos</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FamintusApi\FamintusApi.csproj">
       <Project>{0C1AE22D-03D8-42A1-898E-BEFB2DEC5619}</Project>
       <Name>FamintusApi</Name>
