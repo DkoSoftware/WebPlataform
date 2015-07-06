@@ -7,7 +7,6 @@ configuration: Release
 install:
   - cinst opencover -source https://nuget.org/api/v2/
   - cinst coveralls.io -source https://nuget.org/api/v2/
-  - cinst 7zip.commandline
 
 branches:
   only:
@@ -43,7 +42,8 @@ test_script:
 
 on_success:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
-  - 7za a -tzip famintus-release.zip FamintusApi\famintus-release
+  - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
+  - appveyor PushArtifact FamintusApi\famintus-release.zip
 
 ### Publish to AppHarbor ###
 #  - git config --global credential.helper store
