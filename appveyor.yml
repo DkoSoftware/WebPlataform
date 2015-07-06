@@ -47,7 +47,7 @@ test_script:
 before_deploy:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
   - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
-#  - ps: Push-AppveyorArtifact "famintus-release.zip" #teste: só para visualizar o deploy zipado
+  - ps: Push-AppveyorArtifact "famintus-release.zip"
 
 deploy:
   - provider: GitHub
