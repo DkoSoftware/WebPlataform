@@ -45,6 +45,15 @@ on_success:
   - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
   - ps: Push-AppveyorArtifact "famintus-release.zip"
 
+deploy:
+  - provider: GitHub
+    artifact: famintus-release.zip
+    draft: false
+    prerelease: false
+    on:
+      branch: master                # release from master branch only
+      appveyor_repo_tag: true       # deploy on tag push only
+
 ### Publish to AppHarbor ###
 #  - git config --global credential.helper store
 #  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
