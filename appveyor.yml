@@ -20,6 +20,7 @@ environment:
     secure: v+nh1V8vxRG7ksm+Z00UFg==
   password:
     secure: BlcFmJj1cD8GD/YH4MGj2Q==
+  msbuild: C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe
 
 before_build:
   - nuget restore FamintusApi.sln
@@ -43,7 +44,7 @@ test_script:
 
 on_success:
 #  - C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.sln /p:DeployOnBuild=true /p:PublishProfile=C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.Web\LiterateElephant.Web\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=C:\elefante-release
-  - C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=FamintusApi\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
+  - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=FamintusApi\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
   - 7za a -tzip famintus-release.zip famintus-release
 
 ### Publish to AppHarbor ###
