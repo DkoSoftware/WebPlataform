@@ -19,6 +19,8 @@ environment:
     secure: v+nh1V8vxRG7ksm+Z00UFg==
   password:
     secure: BlcFmJj1cD8GD/YH4MGj2Q==
+  github_releases:
+    secure: +7oEa2WGLSepgdBRDPn6V0tH1xLY/nb3CUdH6ihO99P0sH/m863hAmKkdlfuO2jE
 
 before_build:
   - nuget restore FamintusApi.sln
@@ -47,6 +49,7 @@ before_deploy:
 
 deploy:
   - provider: GitHub
+    auth_token: github_releases
     artifact: famintus-release.zip
     draft: false
     prerelease: false
