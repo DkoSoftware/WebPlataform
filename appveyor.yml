@@ -23,8 +23,6 @@ environment:
     secure: Q8tBYupnuxyx57n4hrgbvQ==
   deploy_password:
     secure: tq46j6oP6TPTkB0tQlG49w==
-  github_releases:
-    secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
 
 before_build:
   - nuget restore FamintusApi.sln
@@ -51,16 +49,10 @@ before_deploy:
   - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
 #  - ps: Push-AppveyorArtifact "famintus-release.zip" #teste: só para visualizar o deploy zipado
 
-#  - git config --global credential.helper store
-#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:deploy_username):$env:deploy_password@famintus.com`n"
-##  - git remote add origin git@famintus.github.com:gbritz/WebPlataform.git
-#  - git remote add appdeploy https://gbritz@Famintus.com/WebPlataform.git
-#  - git push appdeploy master
-
-
 deploy:
   - provider: GitHub
-    auth_token: github_releases
+    auth_token:
+      secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
     artifact: famintus-release.zip
     draft: false
     prerelease: false
