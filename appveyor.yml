@@ -43,7 +43,7 @@ test_script:
 on_success:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
   - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
-  - appveyor PushArtifact famintus-release.zip
+  - ps: Push-AppveyorArtifact "famintus-release.zip"
 
 ### Publish to AppHarbor ###
 #  - git config --global credential.helper store
