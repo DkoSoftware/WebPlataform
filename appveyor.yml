@@ -38,13 +38,18 @@ notifications:
 
 test_script:
   - OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:coverage.xml
-  - coveralls.net --opencover coverage.xml
+  - coveralls.net --opencover coverage.xml --debug
 
-on_success:
-  - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
-  - git remote add appharbor https://qa@appharbor.com/famintus.git
-  - git push appharbor master
+#on_success:
+#  - C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.sln /p:DeployOnBuild=true /p:PublishProfile=C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.Web\LiterateElephant.Web\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=C:\elefante-release
+#  - C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.sln /p:DeployOnBuild=true /p:PublishProfile=C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.Web\LiterateElephant.Web\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=C:\elefante-release
+
+### Publish to AppHarbor ###
+#  - git config --global credential.helper store
+#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
+#  - git remote add appharbor https://qa@appharbor.com/famintus.git
+#  - git push appharbor master
+#  - msbuild c:\Trabalhos\Famintus\WebPlataform\FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=c:\Trabalhos\Famintus\WebPlataform\FamintusApi\Properties\PublishProfiles\qa.pubxml
 
 artifacts:
   - path: coverage.xml
