@@ -15,10 +15,14 @@ branches:
 environment:
   COVERALLS_REPO_TOKEN:
     secure: ZfpQleX/NFMSslGhZRTpiPVxbzJP9IVZo0s2Bda4mqDtT9vFUNrW0PQfI8KgJv4c
-  username:
+  appharbor_username:
     secure: v+nh1V8vxRG7ksm+Z00UFg==
-  password:
+  appharbor_password:
     secure: BlcFmJj1cD8GD/YH4MGj2Q==
+  deploy_username:
+    secure: Q8tBYupnuxyx57n4hrgbvQ==
+  deploy_password:
+    secure: tq46j6oP6TPTkB0tQlG49w==
   github_releases:
     secure: +7oEa2WGLSepgdBRDPn6V0tH1xLY/nb3CUdH6ihO99P0sH/m863hAmKkdlfuO2jE
 
@@ -45,7 +49,9 @@ test_script:
 before_deploy:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
   - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
-#  - ps: Push-AppveyorArtifact "famintus-release.zip"
+#  - ps: Push-AppveyorArtifact "famintus-release.zip" #teste: só para visualizar o deploy zipado
+  - git config --global credential.helper store
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:deploy_username):$env:deploy_password@famintus.com`n"
 
 deploy:
   - provider: GitHub
@@ -59,10 +65,9 @@ deploy:
 
 ### Publish to AppHarbor ###
 #  - git config --global credential.helper store
-#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:username):$env:password@appharbor.com`n"
+#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:appharbor_username):$env:appharbor_password@appharbor.com`n"
 #  - git remote add appharbor https://qa@appharbor.com/famintus.git
 #  - git push appharbor master
-#  - msbuild c:\Trabalhos\Famintus\WebPlataform\FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=c:\Trabalhos\Famintus\WebPlataform\FamintusApi\Properties\PublishProfiles\qa.pubxml
 
 artifacts:
   - path: coverage.xml
