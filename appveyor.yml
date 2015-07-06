@@ -54,4 +54,4 @@ on_success:
 
 artifacts:
   - path: coverage.xml
-  - path: famintus-release.zip
+  - path: FamintusApi\famintus-release.zip
