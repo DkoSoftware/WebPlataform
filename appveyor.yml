@@ -7,6 +7,7 @@ configuration: Release
 install:
   - cinst opencover -source https://nuget.org/api/v2/
   - cinst coveralls.io -source https://nuget.org/api/v2/
+  - cinst 7zip.commandline
 
 branches:
   only:
@@ -40,9 +41,10 @@ test_script:
   - OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:coverage.xml
   - coveralls.net --opencover coverage.xml --debug
 
-#on_success:
+on_success:
 #  - C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.sln /p:DeployOnBuild=true /p:PublishProfile=C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.Web\LiterateElephant.Web\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=C:\elefante-release
-#  - C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.sln /p:DeployOnBuild=true /p:PublishProfile=C:\Trabalhos\CWI\ElefanteLetrado\multi-idiomas\LiterateElephant.Web\LiterateElephant.Web\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=C:\elefante-release
+  - C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=FamintusApi\Properties\PublishProfiles\aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
+  - 7za a -tzip famintus-release.zip famintus-release
 
 ### Publish to AppHarbor ###
 #  - git config --global credential.helper store
@@ -53,3 +55,4 @@ test_script:
 
 artifacts:
   - path: coverage.xml
+  - path: famintus-release.zip
