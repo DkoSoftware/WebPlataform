@@ -40,10 +40,10 @@ test_script:
   - OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:coverage.xml
   - coveralls.net --opencover coverage.xml --debug
 
-on_success:
+before_deploy:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
   - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
-  - ps: Push-AppveyorArtifact "famintus-release.zip"
+#  - ps: Push-AppveyorArtifact "famintus-release.zip"
 
 deploy:
   - provider: GitHub
