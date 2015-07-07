@@ -54,7 +54,7 @@ deploy:
       secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
     artifact: famintus-release.zip
     draft: false
-    prerelease: $($isPrerelease)
+    prerelease: $(isPrerelease)
     on:
       branch:
         - master                    # release from master branch only
