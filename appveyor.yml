@@ -1,18 +1,12 @@
 version: 0.1.{build}
 
-skip_tags: true
-
-configuration: Release
-
-install:
-  - cinst opencover -source https://nuget.org/api/v2/
-  - cinst coveralls.io -source https://nuget.org/api/v2/
-
 branches:
   only:
   - master
   - qa
   - develop
+
+skip_tags: true
 
 environment:
   COVERALLS_REPO_TOKEN:
@@ -26,25 +20,27 @@ environment:
   deploy_password:
     secure: tq46j6oP6TPTkB0tQlG49w==
 
+install:
+  - cinst opencover -source https://nuget.org/api/v2/
+  - cinst coveralls.io -source https://nuget.org/api/v2/
+
+configuration: Release
+
 before_build:
   - nuget restore FamintusApi.sln
 
 build:
   project: FamintusApi.sln
-  publish_nuget: true
-  publish_nuget_symbols: true
+  publish_nuget: false
+  publish_nuget_symbols: false
   verbosity: minimal
-
-notifications:
-  - provider: Webhook
-    url: https://webhooks.gitter.im/e/b67d1551fad31db6dd8e
-    on_build_success: true
-    on_build_failure: true
-    on_build_status_changed: false
 
 test_script:
   - OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:coverage.xml
   - coveralls.net --opencover coverage.xml --debug
+
+artifacts:
+  - path: coverage.xml
 
 before_deploy:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
@@ -62,13 +58,18 @@ deploy:
       branch:
         - master                    # release from master branch only
         - qa
-      appveyor_repo_tag: false      # deploy on tag push only
+      appveyor_repo_tag: true       # deploy on tag push only
 
 ### Publish to AppHarbor ###
+#on_success:
 #  - git config --global credential.helper store
 #  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:appharbor_username):$env:appharbor_password@appharbor.com`n"
 #  - git remote add appharbor https://qa@appharbor.com/famintus.git
 #  - git push appharbor master
 
-artifacts:
-  - path: coverage.xml
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/b67d1551fad31db6dd8e
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: false
