@@ -11,6 +11,8 @@ install:
 branches:
   only:
   - master
+  - qa
+  - develop
 
 environment:
   COVERALLS_REPO_TOKEN:
@@ -57,8 +59,10 @@ deploy:
     draft: false
     prerelease: false
     on:
-      branch: master                # release from master branch only
-      appveyor_repo_tag: false       # deploy on tag push only
+      branch:
+        - master                    # release from master branch only
+        - qa
+      appveyor_repo_tag: false      # deploy on tag push only
 
 ### Publish to AppHarbor ###
 #  - git config --global credential.helper store
