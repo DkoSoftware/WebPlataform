@@ -46,6 +46,7 @@ before_deploy:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
   - 7z a -tzip famintus-release.zip %APPVEYOR_BUILD_FOLDER%\FamintusApi\famintus-release\*
   - ps: Push-AppveyorArtifact "famintus-release.zip"
+  - ps: $isPrerelease = $env:appveyor_repo_branch -eq 'master'
 
 deploy:
   - provider: GitHub
@@ -53,12 +54,12 @@ deploy:
       secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
     artifact: famintus-release.zip
     draft: false
-    prerelease: $(APPVEYOR_REPO_BRANCH = 'qa')
+    prerelease: $($isPrerelease)
     on:
       branch:
         - master                    # release from master branch only
         - qa
-      appveyor_repo_tag: true       # deploy on tag push only
+      appveyor_repo_tag: false      # deploy on tag push only
 
 ### Publish to AppHarbor ###
 #on_success:
