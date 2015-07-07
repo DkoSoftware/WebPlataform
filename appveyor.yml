@@ -53,7 +53,7 @@ deploy:
       secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
     artifact: famintus-release.zip
     draft: false
-    prerelease: false
+    prerelease: $(APPVEYOR_REPO_BRANCH = 'qa')
     on:
       branch:
         - master                    # release from master branch only
