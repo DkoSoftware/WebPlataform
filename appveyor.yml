@@ -46,7 +46,7 @@ before_deploy:
   - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
   - 7z a -tzip famintus-release.zip %APPVEYOR_BUILD_FOLDER%\FamintusApi\famintus-release\*
   - ps: Push-AppveyorArtifact "famintus-release.zip"
-  - ps: $env:GITHUB_PRE_RELEASE = $env:APPVEYOR_REPO_BRANCH.Equals("master")
+  - ps: $env:GITHUB_PRE_RELEASE = $env:APPVEYOR_REPO_BRANCH.Equals("qa")
 
 deploy:
   - provider: GitHub
