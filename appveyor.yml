@@ -1,12 +1,16 @@
 version: 0.1.{build}
 
-branches:
-  only:
-  - master
-  - qa
-  - develop
-
 skip_tags: true
+
+configuration: Release
+
+install:
+  - cinst opencover -source https://nuget.org/api/v2/
+  - cinst coveralls.io -source https://nuget.org/api/v2/
+
+#branches:
+#  only:
+#  - master
 
 environment:
   COVERALLS_REPO_TOKEN:
@@ -20,53 +24,14 @@ environment:
   deploy_password:
     secure: tq46j6oP6TPTkB0tQlG49w==
 
-install:
-  - cinst opencover -source https://nuget.org/api/v2/
-  - cinst coveralls.io -source https://nuget.org/api/v2/
-
-configuration: Release
-
 before_build:
   - nuget restore FamintusApi.sln
 
 build:
   project: FamintusApi.sln
-  publish_nuget: false
-  publish_nuget_symbols: false
+  publish_nuget: true
+  publish_nuget_symbols: true
   verbosity: minimal
-
-test_script:
-  - OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:coverage.xml
-  - coveralls.net --opencover coverage.xml --debug
-
-artifacts:
-  - path: coverage.xml
-
-before_deploy:
-  - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
-  - 7z a -tzip famintus-release.zip %APPVEYOR_BUILD_FOLDER%\FamintusApi\famintus-release\*
-  - ps: Push-AppveyorArtifact "famintus-release.zip"
-  - ps: $env:GITHUB_PRE_RELEASE = $env:APPVEYOR_REPO_BRANCH.Equals("qa")
-
-deploy:
-  - provider: GitHub
-    auth_token:
-      secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
-    artifact: famintus-release.zip
-    draft: false
-    prerelease: $(GITHUB_PRE_RELEASE)
-    on:
-      branch:
-        - master                    # release from master branch only
-        - qa
-      appveyor_repo_tag: false      # deploy on tag push only
-
-### Publish to AppHarbor ###
-#on_success:
-#  - git config --global credential.helper store
-#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:appharbor_username):$env:appharbor_password@appharbor.com`n"
-#  - git remote add appharbor https://qa@appharbor.com/famintus.git
-#  - git push appharbor master
 
 notifications:
   - provider: Webhook
@@ -74,3 +39,32 @@ notifications:
     on_build_success: true
     on_build_failure: true
     on_build_status_changed: false
+
+test_script:
+  - OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:"\"FamintusApi.Tests\bin\Release\FamintusApi.Tests.dll\" /logger:Appveyor" -skipautoprops -filter:"+[FamintusApi*]*" -output:coverage.xml
+  - coveralls.net --opencover coverage.xml --debug
+
+before_deploy:
+  - msbuild.exe FamintusApi.sln /p:DeployOnBuild=true /p:PublishProfile=aws_qa.pubxml /p:WebPublishMethod=FileSystem /p:publishUrl=famintus-release
+  - 7z a -tzip famintus-release.zip FamintusApi\famintus-release
+  - ps: Push-AppveyorArtifact "famintus-release.zip"
+
+deploy:
+  - provider: GitHub
+    auth_token:
+      secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
+    artifact: famintus-release.zip
+    draft: false
+    prerelease: false
+    on:
+      branch: master                # release from master branch only
+      appveyor_repo_tag: false       # deploy on tag push only
+
+### Publish to AppHarbor ###
+#  - git config --global credential.helper store
+#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:appharbor_username):$env:appharbor_password@appharbor.com`n"
+#  - git remote add appharbor https://qa@appharbor.com/famintus.git
+#  - git push appharbor master
+
+artifacts:
+  - path: coverage.xml
