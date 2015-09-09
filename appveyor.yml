@@ -52,7 +52,7 @@ before_deploy:
 deploy:
   - provider: GitHub
     auth_token:
-      secure: y/7G9NAEoSFz4TjEvx9WDY0IVBVvgNE3J5REk5/HfY+0lBBZAEdVDlYYWQT/iMnR
+      secure: 5bhMfIotYWZsya/yrupGyrqXjo6AtIxMOpNveM8l4GmY219cujy1PgQy1qkc3cJE
     artifact: famintus-release.zip
     draft: false
     prerelease: false
